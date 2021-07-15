@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">DataBase</string>
+    <string name="textview">Welcome to Venus</string>
+    <string name="textViewUserName">Введите ваш email</string>
+    <string name="textViewPassword">Введите ваш пароль</string>
+    <string name="buttonConnect">Войти</string>
+    <string name="buttonRegister">Регистрация</string>
+    <string name="textViewForgotPassword">Забыли пароль?</string>
+    <string name="text_view_register">Выполните регистрацию в Венере</string>
+    <string name="textViewFindPassword">выдумайте пароль</string>
+    <string name="textViewFindPasswordRepeat">повторите выдуманный пароль</string>
+    <string name="text_view_forgot_password">Забыли пароль?</string>
+    <string name="text_view_need_for_password">Нам просто нужен ваш зарегистрированный адрес электронной почты, чтобы отправить вам инструкции по сбросу пароля.</string>
+    <string name="button_cancelled">Отмена</string>
+    <string name="button_reset_password">Сброс пароля</string>
+    <string name="app_firebase_url">https://database-d4160-default-rtdb.europe-west1.firebasedatabase.app/</string>
+    <string name="reference_key">users</string>
+    <string name="text_view_date">Добро пожаловать</string>
+    <string name="textViewSetDate">Дата записи</string>
+    <string name="textViewBeginWork">Начало рабочего дня</string>
+    <string name="textViewFinishWork">Конец рабочего дня</string>
+    <string name="textViewBreakTime">Перерыв</string>
+    <string name="textViewWorkShift">Смена работы</string>
+    <string name="textViewSetDayValue">Ваши данные:</string>
+    <string name="textViewRatePerHour">Ставка в час:</string>
+    <string name="textViewTotalForDay">ИТОГО за день:</string>
+    <string name="textViewTotalHours">Часов</string>
+    <string name="textViewTotalMoney">Денег</string>
+    <string name="textViewActions">ДЕЙСТВИЯ</string>
+    <string name="buttonSaveValue">Сохранить</string>
+    <string name="buttonChangeValue">Изменить</string>
+    <string name="buttonDeleteValue">Удалить</string>
+
+
+</resources>

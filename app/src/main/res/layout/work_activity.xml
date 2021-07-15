@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_padding"
+        android:text="@string/text_view_date"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_for_text_view" />
+
+    <TextView
+        android:id="@+id/textViewFirstName"
+        android:layout_marginRight="@dimen/layout_margin_padding"
+        android:layout_marginLeft="@dimen/layout_margin_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NoNameFirstName" />
+
+    <TextView
+        android:id="@+id/textViewSecondName"
+        android:layout_marginRight="@dimen/layout_margin_padding"
+        android:layout_marginLeft="@dimen/layout_margin_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NoNameSecondName" />
+
+    <TextView
+        android:id="@+id/textViewThirdName"
+        android:layout_marginRight="@dimen/layout_margin_padding"
+        android:layout_marginLeft="@dimen/layout_margin_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NoNameThirdName" />
+
+    <TextView
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:layout_marginTop="@dimen/layout_margin_padding"
+        android:textColor="@color/black"
+        android:text="@string/textViewSetDayValue"
+        android:textSize="@dimen/text_size_for_text_view" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/layout_margin_padding"
+        android:layout_marginRight="@dimen/layout_margin_padding">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewSetDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/textViewSetDate" />
+
+            <EditText
+                android:id="@+id/editTextSetDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <requestFocus
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewSetDate2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/textViewBeginWork" />
+
+            <EditText
+                android:id="@+id/editTextBeginWork"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewSetDate3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/textViewFinishWork" />
+
+            <EditText
+                android:id="@+id/editTextFinishWork"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/textViewBreakTime" />
+
+            <EditText
+                android:id="@+id/editTextBreakTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/textViewWorkShift" />
+
+            <Spinner
+                android:id="@+id/spinnerWorkShift"
+                android:layout_weight="1"></Spinner>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewRatePerHour"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/textViewRatePerHour" />
+
+            <EditText
+                android:id="@+id/editTextTextRatePerHour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewTotalForDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:text="@string/textViewTotalForDay"
+                android:textAlignment="center"
+                android:textSize="@dimen/text_size_for_text_view"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="1"
+                android:text="@string/textViewTotalHours"
+                android:textSize="@dimen/text_size_for_text_view"
+                android:textStyle="bold"></TextView>
+
+            <TextView
+                android:id="@+id/textViewTotalHour"
+                android:layout_height="37dp"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size_for_text_view"
+                android:textStyle="bold"></TextView>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_weight="1"
+                android:text="@string/textViewTotalMoney"
+                android:textSize="@dimen/text_size_for_text_view"
+                android:textStyle="bold"></TextView>
+
+            <TextView
+                android:id="@+id/textViewTotalMoney"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size_for_text_view"
+                android:textStyle="bold"></TextView>
+        </TableRow>
+
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_size_for_text_view"
+        android:layout_marginTop="@dimen/layout_margin_padding"
+        android:layout_marginLeft="@dimen/layout_margin_padding"
+        android:layout_marginRight="@dimen/layout_margin_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/textViewActions" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/layout_margin_padding"
+        android:layout_marginLeft="@dimen/layout_margin_padding"
+        android:layout_marginEnd="@dimen/layout_margin_padding"
+        android:layout_marginRight="@dimen/layout_margin_padding"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonSaveValue"
+            android:textSize="@dimen/text_size_for_small_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/layout_margin_padding"
+            android:layout_marginRight="@dimen/layout_margin_padding"
+            android:layout_weight="1"
+            android:text="@string/buttonSaveValue" />
+
+        <Button
+            android:id="@+id/buttonChangeValue"
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/text_size_for_small_button"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/layout_margin_padding"
+            android:layout_marginRight="@dimen/layout_margin_padding"
+            android:layout_weight="1"
+            android:text="@string/buttonChangeValue" />
+
+        <Button
+            android:id="@+id/buttonDeleteValue"
+            android:textSize="@dimen/text_size_for_small_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/buttonDeleteValue" />
+    </LinearLayout>
+
+
+</LinearLayout>
