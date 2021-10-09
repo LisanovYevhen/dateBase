@@ -2,12 +2,13 @@ package activity;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.graphics.Color;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,28 +22,32 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.database.R;
 
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class WorkActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
+public class WorkActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener, View.OnKeyListener {
     private EditText editTextSetDate;
     private Calendar calendar;
     private SimpleDateFormat simpleDateFormat;
     private SimpleDateFormat simpleTimeFormat;
+    private SimpleDateFormat simpleDateAndTimeFormat;
     private Spinner spinnerWorkShift;
     private EditText editTextBeginWork;
     private EditText editTextFinishWork;
     private EditText editTextBreakTime;
     private String workShift;
-    private EditText editTextTextRatePerHour;
+    private EditText editTextRatePerHour;
     private TextView textViewTotalHour;
     private TextView textViewTotalMoney;
-    private String[] totalDataValues= new String[3];
+    private String[] totalDataValues;
+    private Button buttonSaveValue;
+    private Button buttonChangeValue;
+    private Button buttonDeleteValue;
 
 
     @Override
@@ -50,9 +55,14 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.work_activity);
 
+
+
         calendar=Calendar.getInstance();
+
         simpleDateFormat= new SimpleDateFormat("dd MMMM yyyy");
         simpleTimeFormat = new SimpleDateFormat("HH:mm");
+        simpleDateAndTimeFormat= new SimpleDateFormat("dd MMMM yyyy HH:mm");
+
 
         editTextSetDate=findViewById(R.id.editTextSetDate);
         editTextSetDate.setOnTouchListener(this);
@@ -62,16 +72,34 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
         editTextFinishWork.setOnTouchListener(this);
         editTextBreakTime=findViewById(R.id.editTextBreakTime);
         editTextBreakTime.setOnTouchListener(this);
-        editTextTextRatePerHour=findViewById(R.id.editTextTextRatePerHour);
-        editTextTextRatePerHour.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        editTextRatePerHour=findViewById(R.id.editTextRatePerHour);
+        editTextRatePerHour.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        editTextRatePerHour.setText("0.00");
+        editTextRatePerHour.setOnKeyListener(this);
 
-        editTextSetDate.setText(simpleDateFormat.format(calendar.getTime()));
-        editTextBeginWork.setText(simpleTimeFormat.format(calendar.getTime()));
-        editTextFinishWork.setText(simpleTimeFormat.format(calendar.getTime()));
+        String currentTimeAndDate=simpleDateAndTimeFormat.format(calendar.getTime());
+        String currentTime=simpleTimeFormat.format(calendar.getTime());
+        String currentDate=simpleDateFormat.format(calendar.getTime());
+        totalDataValues=new String[]{currentTimeAndDate,currentTimeAndDate,"0:00"};
+
+        editTextSetDate.setText(currentDate);
+        editTextBeginWork.setText(currentTime);
+        editTextFinishWork.setText(currentTime);
         editTextBreakTime.setText("0:00");
 
         textViewTotalHour=findViewById(R.id.textViewTotalHour);
+        textViewTotalHour.setText("0:00");
         textViewTotalMoney=findViewById(R.id.textViewTotalMoney);
+        textViewTotalMoney.setText("0.00");
+
+
+
+        buttonSaveValue=findViewById(R.id.buttonSaveValue);
+        buttonSaveValue.setOnClickListener(this);
+        buttonChangeValue=findViewById(R.id.buttonChangeValue);
+        buttonChangeValue.setOnClickListener(this);
+        buttonDeleteValue=findViewById(R.id.buttonDeleteValue);
+        buttonDeleteValue.setOnClickListener(this);
 
 
         spinnerWorkShift= findViewById(R.id.spinnerWorkShift);
@@ -79,6 +107,7 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
 
 
     }
+
 
     private void  setSpinner(Spinner spinner){
         String data[]={"1-я","2-я","night"};
@@ -98,27 +127,116 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    private void setMoneyAndHourResult(TextView totalHour,TextView totalMoney, Calendar calendar){
+    private void setMoneyAndHourResult(TextView totalHour,TextView totalMoney, EditText editTextBreakTime, Calendar calendar, String[] totalDataValues, SimpleDateFormat[] formats){
+            if(!totalDataValues[2].equals("0:00")) {
+                try {
+                    Date dateBeginWork = formats[0].parse(totalDataValues[0]);
+                    Date dateFinishWork = formats[0].parse(totalDataValues[1]);
+                    Date breakTime = formats[0].parse(totalDataValues[2]);
 
+
+                    calendar.setTime(breakTime);
+
+                    int breakHours=calendar.get(Calendar.HOUR_OF_DAY);
+                    int breakMinute=calendar.get(Calendar.MINUTE);
+                    int breakAllMinutes=breakHours*60+breakMinute;
+
+
+                    calendar.setTime(dateFinishWork);
+                    calendar.add(Calendar.MINUTE, -(dateBeginWork.getMinutes()));
+                    calendar.add(Calendar.HOUR_OF_DAY, -(dateBeginWork.getHours()));
+
+                    int totalMinutes=calendar.get(Calendar.HOUR_OF_DAY)*60+calendar.get(Calendar.MINUTE);
+
+                    if( totalMinutes<=breakAllMinutes){
+                        editTextBreakTime.setText(("0:00"));
+                        Toast.makeText(this, "Время перерыва не может быть больше или равно рабочему времени", Toast.LENGTH_SHORT).show();
+                        totalDataValues[2]="0:00";
+                    }
+                    else {
+                        calendar.add(Calendar.MINUTE, -breakMinute);
+                        calendar.add(Calendar.HOUR_OF_DAY, -breakHours);
+                    }
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    Date dateBeginWork = formats[0].parse(totalDataValues[0]);
+                    Date dateFinishWork = formats[0].parse(totalDataValues[1]);
+                    calendar.setTime(dateFinishWork);
+                    calendar.add(Calendar.MINUTE, -(dateBeginWork.getMinutes()));
+                    calendar.add(Calendar.HOUR_OF_DAY, -(dateBeginWork.getHours()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+            String allTime=formats[1].format(calendar.getTime());
+            totalHour.setText(allTime);
+            String stringRatePerHour=editTextRatePerHour.getText().toString();
+            if (stringRatePerHour.isEmpty()){
+                editTextRatePerHour.setError("Ставка не может быть пустой строкой");
+                return;
+            }
+            double money=(calendar.get(Calendar.HOUR_OF_DAY)*60+calendar.get(Calendar.MINUTE))*Float.valueOf(stringRatePerHour)/60;
+            String moneyString= String.format("%.2f",money);
+            totalMoney.setText(moneyString);
+            calendar.setTimeInMillis(System.currentTimeMillis());
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-
+            case R.id.buttonSaveValue:
+                setAlertDialog(buttonSaveValue).show();
+                break;
+            case R.id.buttonChangeValue:
+                setAlertDialog(buttonChangeValue).show();
+                break;
+            case R.id.buttonDeleteValue:
+                setAlertDialog(buttonDeleteValue).show();
+                break;
         }
 
     }
+    private AlertDialog setAlertDialog(Button button){
+        AlertDialog.Builder builder = new AlertDialog.Builder(WorkActivity.this);
+        DialogInterface.OnClickListener listener= new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(which==Dialog.BUTTON_POSITIVE){
+                    Toast.makeText(WorkActivity.this, "Не хуйня", Toast.LENGTH_SHORT).show();
+                }
+                if (which==Dialog.BUTTON_NEGATIVE){
+                    dialog.cancel();
 
-    private DatePickerDialog setDate(Context context, Calendar calendar,SimpleDateFormat simpleDateFormat,EditText editText){
+                }
+            }
+        };
+        builder.setIcon(R.drawable.hard_worker)
+                .setPositiveButton("Да",listener)
+                .setNegativeButton("Нет",listener)
+                .setCancelable(true);
+
+        if (button.getId()==R.id.buttonSaveValue) builder.setTitle("Сохранить данные за "+editTextSetDate.getText().toString()+" ?");
+        if (button.getId()==R.id.buttonChangeValue) builder.setTitle("Изменить данные за "+editTextSetDate.getText().toString()+" ?");
+        if (button.getId()==R.id.buttonDeleteValue) {
+            builder.setTitle("Внимание!!!");
+            builder.setMessage("Все данные "+editTextSetDate.getText().toString()+" будут уничтоженные. Продолжить?");
+        }
+        return builder.create();
+
+    }
+
+    private DatePickerDialog setDateDialog(Context context, Calendar calendar,SimpleDateFormat simpleDateFormat,EditText editText){
         DatePickerDialog.OnDateSetListener onDateSetListener= new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                   calendar.set(year,month,dayOfMonth);
                   String date = simpleDateFormat.format(calendar.getTime());
-                  Toast.makeText(context, "Установлено дата: "+date, Toast.LENGTH_SHORT).show();
                   editText.setText((date));
-                  calendar.setTime(new Date());
+                  calendar.setTimeInMillis(System.currentTimeMillis());
             }
         };
         int year = calendar.get(Calendar.YEAR);
@@ -129,21 +247,35 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private TimePickerDialog setTime(Context context,Calendar calendar,SimpleDateFormat simpleDateFormat,EditText editText){
+    private TimePickerDialog setTimeDialog(Context context,Calendar calendar,EditText editText,SimpleDateFormat[] formats){
+        int hour;
+        int minute;
         TimePickerDialog.OnTimeSetListener onTimeSetListener= new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH),hourOfDay,minute);
-                String time=simpleDateFormat.format(calendar.getTime());
+                String time=formats[0].format(calendar.getTime());
                 editText.setText(time);
-                calendar.setTimeInMillis(System.currentTimeMillis());
-                Log.d(SignupActivity.LOG,simpleDateFormat.format(calendar.getTime()));
+
+                String fullDataValues=formats[1].format(calendar.getTime());
+
+                if(editText.getId()==R.id.editTextBeginWork) totalDataValues[0]=fullDataValues;
+                if(editText.getId()==R.id.editTextFinishWork) totalDataValues[1]=fullDataValues;
+                if(editText.getId()==R.id.editTextBreakTime) totalDataValues[2]=fullDataValues;
+
+                setMoneyAndHourResult(textViewTotalHour,textViewTotalMoney,editTextBreakTime,calendar,totalDataValues,new SimpleDateFormat[]{formats[1],formats[0]});
+
             }
         };
-        int hour=calendar.get(Calendar.HOUR_OF_DAY);
-        int minute=calendar.get(Calendar.MINUTE);
+         if (editText.getId()==R.id.editTextBreakTime){
+              hour=0;
+              minute=00;
+         } else {
+              hour = calendar.get(Calendar.HOUR_OF_DAY);
+              minute = calendar.get(Calendar.MINUTE);
+         }
         int style = AlertDialog.THEME_HOLO_DARK;
-        return new TimePickerDialog(context,style,onTimeSetListener,hour,minute,true);
+         return new TimePickerDialog(context,style,onTimeSetListener,hour,minute,true);
     }
 
     @Override
@@ -151,21 +283,33 @@ public class WorkActivity extends AppCompatActivity implements View.OnClickListe
         if(event.getAction()==MotionEvent.ACTION_DOWN) {
             switch (v.getId()) {
                 case R.id.editTextSetDate:
-                    setDate(WorkActivity.this,calendar,simpleDateFormat,editTextSetDate).show();
+                    setDateDialog(WorkActivity.this,calendar,simpleDateFormat,editTextSetDate).show();
                     break;
                 case R.id.editTextBeginWork:
-                    setTime(WorkActivity.this,calendar,simpleTimeFormat,editTextBeginWork).show();
+                    setTimeDialog(WorkActivity.this,calendar,editTextBeginWork,new SimpleDateFormat[]{simpleTimeFormat,simpleDateAndTimeFormat}).show();
                     break;
                 case R.id.editTextFinishWork:
-                    setTime(WorkActivity.this,calendar,simpleTimeFormat,editTextFinishWork).show();
+                    setTimeDialog(WorkActivity.this,calendar,editTextFinishWork,new SimpleDateFormat[]{simpleTimeFormat,simpleDateAndTimeFormat}).show();
                     break;
                 case R.id.editTextBreakTime:
-                    setTime(WorkActivity.this,calendar,simpleTimeFormat,editTextBreakTime).show();
+                    setTimeDialog(WorkActivity.this,calendar,editTextBreakTime,new SimpleDateFormat[]{simpleTimeFormat,simpleDateAndTimeFormat}).show();
                     break;
-
             }
         }
-        return true;
+        return false;
 
+    }
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        switch (v.getId()){
+            case R.id.editTextRatePerHour:
+                if (event.getAction() == KeyEvent.ACTION_DOWN &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)){
+                        setMoneyAndHourResult(textViewTotalHour,textViewTotalMoney,editTextBreakTime,calendar,totalDataValues,new SimpleDateFormat[]{simpleDateAndTimeFormat,simpleTimeFormat});
+                }
+                break;
+        }
+        return false;
     }
 }

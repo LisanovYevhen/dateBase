@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginLeft="@dimen/layout_margin_padding"
+    android:layout_marginTop="@dimen/layout_margin_padding"
+    android:layout_marginRight="@dimen/layout_margin_padding"
+    android:layout_marginBottom="@dimen/layout_margin_padding"
+    android:orientation="vertical">
+
+
+
+    <CheckBox
+        android:id="@+id/checkBoxBeginWork"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/textViewBeginWork" />
+
+    <CheckBox
+        android:id="@+id/checkBoxFinishWork"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/textViewFinishWork" />
+
+    <CheckBox
+        android:id="@+id/checkBoxBreakTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/textViewBreakTime" />
+
+    <CheckBox
+        android:id="@+id/checkBoxWorkShift"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/textViewWorkShift" />
+
+    <CheckBox
+        android:id="@+id/checkBoxRatePerHour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/textViewRatePerHour" />
+</LinearLayout>

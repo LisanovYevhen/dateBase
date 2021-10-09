@@ -7,6 +7,8 @@
 
     <TextView
         android:id="@+id/textView"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_gravity="center_horizontal"
         android:textAlignment="center"
@@ -18,27 +20,16 @@
 
     <TextView
         android:id="@+id/textViewFirstName"
+        android:lines="3"
         android:layout_marginRight="@dimen/layout_margin_padding"
         android:layout_marginLeft="@dimen/layout_margin_padding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="NoNameFirstName" />
 
-    <TextView
-        android:id="@+id/textViewSecondName"
-        android:layout_marginRight="@dimen/layout_margin_padding"
-        android:layout_marginLeft="@dimen/layout_margin_padding"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="NoNameSecondName" />
+        android:text="@string/user_value" />
 
-    <TextView
-        android:id="@+id/textViewThirdName"
-        android:layout_marginRight="@dimen/layout_margin_padding"
-        android:layout_marginLeft="@dimen/layout_margin_padding"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="NoNameThirdName" />
+
+
 
     <TextView
         android:layout_marginLeft="50dp"
@@ -160,7 +151,7 @@
                 android:text="@string/textViewRatePerHour" />
 
             <EditText
-                android:id="@+id/editTextTextRatePerHour"
+                android:id="@+id/editTextRatePerHour"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

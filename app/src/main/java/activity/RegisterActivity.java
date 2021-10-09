@@ -25,12 +25,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private Button buttonRegister;
     private FirebaseAuth firebaseAuth;
     private static final String CHILD_INFO="userInformation";
+    private Button buttonCancelled;
 
     private DatabaseReference reference;
     @Override
     protected void onCreate( Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_activity);
+        buttonCancelled=findViewById(R.id.buttonCancelled);
+        buttonCancelled.setOnClickListener(this);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextRepeatPassword = findViewById(R.id.editTextPasswordRepeat);
@@ -89,7 +93,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                                        UserInformation userInformation =new UserInformation(userEmail,providerId,phoneNumber);
                                        reference.child(userID).child(CHILD_INFO).setValue(userInformation);
-                                       Intent intent = new Intent(RegisterActivity.this, WorkActivity.class);
+                                       finish();
+                                       Intent intent = new Intent(RegisterActivity.this, MainWorkActivity.class);
                                        startActivity(intent);
                                     }
 
@@ -99,7 +104,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 }
 
             }
-            break;
+                break;
+            case R.id.buttonCancelled:finish();
+                break;
+
         }
     }
 }

@@ -13,6 +13,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/black"
         android:layout_weight="2"
         android:src="@drawable/image_moriarty" />
 
@@ -32,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/layout_margin_padding"
         android:background="@color/white"
-        android:text="@string/textViewUserName"
+        android:hint="@string/textViewUserName"
         android:textColor="@color/black"
         android:textIsSelectable="false"
         android:textSize="@dimen/text_size_for_edit_text"
@@ -42,13 +43,13 @@
         android:id="@+id/editTextPassword"
         android:layout_width="match_parent"
         android:textAlignment="center"
- 
+        android:inputType="textPassword"
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:layout_marginBottom="@dimen/layout_margin_padding"
         android:textColor="@color/black"
-        android:text="@string/textViewPassword"
+        android:hint="@string/textViewPassword"
         android:textSize="@dimen/text_size_for_edit_text"></EditText>
 
     <LinearLayout

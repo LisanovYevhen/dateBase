@@ -1,6 +1,7 @@
 package activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,15 +19,22 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
-    public static String LOG="SignupActivity";
+    public static final String LOG="SignupActivity";
+    public static final String APP_PREFERENCES = "settings";
+    public static final String APP_PREFERENCES_EMAIL="email";
     private Button connect,register;
     private TextView textViewForgotPassword;
     private EditText edEmail,edPassword;
     private FirebaseAuth firebaseAuth;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up_activity);
+
+        sharedPreferences=getSharedPreferences(APP_PREFERENCES,MODE_PRIVATE);
+        editor=sharedPreferences.edit();
 
         connect=findViewById(R.id.buttonConnect);
         connect.setOnClickListener(this);
@@ -41,6 +49,10 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         edEmail =findViewById(R.id.editTextEmail);
         edPassword=findViewById(R.id.editTextPassword);
+        if(sharedPreferences.contains(APP_PREFERENCES_EMAIL)){
+            edEmail.setText(sharedPreferences.getString(APP_PREFERENCES_EMAIL,""));
+
+        }
     }
 
     @Override
@@ -73,12 +85,12 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                                         Toast.makeText(SignupActivity.this, "Ошибка входа проверьте ваш email или пароль", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
+                                    editor.putString(APP_PREFERENCES_EMAIL,email);
+                                    editor.apply();
                                     finish();
-                                    Intent intent = new Intent(SignupActivity.this, WorkActivity.class);
+                                    Intent intent = new Intent(SignupActivity.this, MainWorkActivity.class);
                                     startActivity(intent);
-
                                 }
-
                             }
                         });
 
@@ -87,7 +99,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             break;
             case R.id.textViewForgotPassword:{
                 startActivity(new Intent(SignupActivity.this,ResetPasswordActivity.class));
-
             }
             break;
 

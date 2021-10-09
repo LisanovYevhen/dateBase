@@ -30,6 +30,13 @@
     <string name="buttonSaveValue">Сохранить</string>
     <string name="buttonChangeValue">Изменить</string>
     <string name="buttonDeleteValue">Удалить</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="user_value">
+    NoNameFirstName\n
+    NoNameSecondName\n
+    NoNameThirdName\n
+    </string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

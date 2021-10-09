@@ -1,0 +1,24 @@
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/layout_margin_padding">
+
+    <TextView
+        android:id="@+id/rowFirstText"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_for_item_list"/>
+
+    <ImageView
+        android:id="@+id/ivGroupIndicator"
+        android:layout_gravity="end"
+        android:background="@drawable/ic_keyboard_arrow_down_black_24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"/>
+</LinearLayout>

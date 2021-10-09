@@ -1,5 +1,7 @@
 package util;
 
+import androidx.fragment.app.Fragment;
+
 public class UserInformation {
     private String userEmail;
     private String providerId;
